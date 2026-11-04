@@ -1,6 +1,8 @@
-# Acondair · web nueva (etapa 2)
+# Acondair: web nueva (etapa 2)
 
 Sitio en Next.js 16 + Tailwind 4 + Motion que reemplaza el WordPress/PHP 7.4 actual.
+
+Demo publicada: https://paziti.github.io/acondair-web/ (versión estática: sin redirecciones 301 ni optimización de imágenes; se publica sola con cada push a `main`, ver `.github/workflows/pages.yml`).
 
 ## Correr
 ```
