@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Acondair · web nueva (etapa 2)
 
-## Getting Started
+Sitio en Next.js 16 + Tailwind 4 + Motion que reemplaza el WordPress/PHP 7.4 actual.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Correr
+```
+npm install
+npm run build
+npm start        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Qué tiene
+- Inicio con calculadora de kcal/h y frigorías que recomienda equipos de la tienda.
+- 10 páginas de sistemas con el texto real de la web actual.
+- Diseño fiel a la web actual (colores, Montserrat, slider, bandas azules, pie de 3 columnas). Ver DESIGN.md.
+- Tienda con los 55 productos, búsqueda, categorías, ficha con cotizador de envío.
+- Precios en dólares (lista) mostrados en pesos con el dólar BNA venta, que se refresca cada 10 minutos
+  (demo: dolarapi.com; en producción lo escribe el módulo que José ya tiene conectado al ERP).
+- Checkout en 3 pasos: datos, entrega (Andreani domicilio/sucursal, instalación en Bahía, retiro), pago.
+- Panel oculto en /panel: cotización del dólar (actualizar o fijar a mano), precio en US$, stock, peso y medidas editables, aumento de precios por categoría, pedidos y envíos.
+- SEO: metadatos por página, JSON-LD (HVACBusiness y Product), sitemap.xml, robots.txt y redirecciones 301/308 desde todas las URLs viejas de WordPress.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Simulado en esta demo (para producción)
+- Envío: `src/lib/envio.ts` usa tarifas de ejemplo. Reemplazar por la API de Andreani (necesita contrato y credenciales).
+- Pago: el botón de Mercado Pago no cobra. Integrar Checkout Pro + webhook de pago acreditado.
+- Carrito, pedidos y cambios del panel viven en localStorage. Pasar a base de datos (Supabase/Postgres) con login real del panel.
+- Formulario de contacto: abre el mail del usuario. Pasar a envío desde servidor (Resend o similar).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Pendiente de datos reales
+- Descripción de la obra Colegio El Solar (en la web actual es texto de ejemplo).
+- Puestos y fotos del equipo.
+- Fotos de obras en mejor resolución (las actuales son de 800 px).
+- Pesos y medidas reales de los 55 productos (los de la demo son estimados por tipo).
