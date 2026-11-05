@@ -98,10 +98,10 @@ export default function Inicio() {
             <h2 className="text-[26px] md:text-[30px] font-semibold">¿Por qué elegirnos?</h2>
             <p className="mt-2 text-white/85 text-[15.5px]">Un servicio personalizado y profesional nos hace diferentes.</p>
           </div>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 text-center">
             {CIFRAS.map((c) => (
               <div key={c.etiqueta}>
-                <p className="flex items-baseline justify-center text-[34px] sm:text-[52px] md:text-[60px] font-semibold leading-none">
+                <p className="flex items-baseline justify-center text-[48px] sm:text-[40px] md:text-[50px] lg:text-[44px] xl:text-[52px] font-semibold leading-none">
                   <NumeroDeslizante valor={c.valor} alEntrar />
                   <span aria-hidden>+</span>
                 </p>

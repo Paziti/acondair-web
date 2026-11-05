@@ -7,7 +7,13 @@ import { useEffect, useRef, useState } from "react";
 // cambió por la acción del usuario (o, una sola vez, al entrar en pantalla).
 function Columna({ digito, instantaneo }: { digito: number; instantaneo: boolean }) {
   return (
-    <span className="relative inline-block overflow-hidden h-[1em] leading-none align-baseline" style={{ width: "0.62em" }}>
+    // Un "0" invisible en el flujo da el ancho (cifras tabulares: todas miden lo
+    // mismo según el peso de la letra) y la línea base. Si el recorte
+    // (overflow-hidden) estuviera en este span, el navegador alinearía su borde
+    // inferior con la base del texto y los dígitos quedarían más altos que el "+".
+    <span className="relative inline-block leading-none">
+      <span aria-hidden className="invisible before:content-['0']" />
+      <span className="absolute inset-0 overflow-hidden">
       <motion.span
         className="absolute left-0 top-0 flex flex-col w-full"
         initial={false}
@@ -19,6 +25,7 @@ function Columna({ digito, instantaneo }: { digito: number; instantaneo: boolean
           <span key={i} data-d={i} className="h-[1em] leading-none text-center before:content-[attr(data-d)]" />
         ))}
       </motion.span>
+      </span>
     </span>
   );
 }
@@ -43,10 +50,10 @@ export function NumeroDeslizante({ valor, alEntrar = false, className = "" }: { 
       <span aria-hidden className="inline-flex items-baseline select-none">
         {relleno.split("").map((ch, i) => {
           const clave = relleno.length - i;
-          if (ch === " ") return <span key={clave} style={{ width: "0.62em" }} />;
+          if (ch === " ") return <span key={clave} className="invisible leading-none before:content-['0']" />;
           if (!/\d/.test(ch))
             return (
-              <span key={clave} data-d={ch} className="self-start h-[1em] leading-none before:content-[attr(data-d)]" />
+              <span key={clave} data-d={ch} className="leading-none before:content-[attr(data-d)]" />
             );
           return <Columna key={clave} digito={Number(ch)} instantaneo={!!reducido} />;
         })}
