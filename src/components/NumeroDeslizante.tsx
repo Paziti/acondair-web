@@ -15,9 +15,8 @@ function Columna({ digito, instantaneo }: { digito: number; instantaneo: boolean
         transition={instantaneo ? { duration: 0 } : { type: "spring", duration: 0.7, bounce: 0.12 }}
       >
         {Array.from({ length: 10 }, (_, i) => (
-          <span key={i} className="h-[1em] leading-none text-center">
-            {i}
-          </span>
+          // el dígito se dibuja por CSS: así no queda en el texto copiado ni lo indexa Google
+          <span key={i} data-d={i} className="h-[1em] leading-none text-center before:content-[attr(data-d)]" />
         ))}
       </motion.span>
     </span>
@@ -39,16 +38,15 @@ export function NumeroDeslizante({ valor, alEntrar = false, className = "" }: { 
   const relleno = texto.padStart(largoFinal, " ");
 
   return (
-    <span ref={ref} className={`cifra inline-flex items-baseline ${className}`} aria-label={Math.round(valor).toLocaleString("es-AR")}>
-      <span aria-hidden className="inline-flex items-baseline">
+    <span ref={ref} className={`cifra inline-flex items-baseline ${className}`}>
+      <span className="sr-only">{Math.round(valor).toLocaleString("es-AR")}</span>
+      <span aria-hidden className="inline-flex items-baseline select-none">
         {relleno.split("").map((ch, i) => {
           const clave = relleno.length - i;
           if (ch === " ") return <span key={clave} style={{ width: "0.62em" }} />;
           if (!/\d/.test(ch))
             return (
-              <span key={clave} className="leading-none">
-                {ch}
-              </span>
+              <span key={clave} data-d={ch} className="self-start h-[1em] leading-none before:content-[attr(data-d)]" />
             );
           return <Columna key={clave} digito={Number(ch)} instantaneo={!!reducido} />;
         })}
