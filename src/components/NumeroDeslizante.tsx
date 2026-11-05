@@ -30,15 +30,42 @@ function Columna({ digito, instantaneo }: { digito: number; instantaneo: boolean
   );
 }
 
-export function NumeroDeslizante({ valor, alEntrar = false, className = "" }: { valor: number; alEntrar?: boolean; className?: string }) {
+export function NumeroDeslizante({
+  valor,
+  alEntrar = false,
+  retraso = 0,
+  alTerminar,
+  className = "",
+}: {
+  valor: number;
+  alEntrar?: boolean;
+  /** ms de espera antes de rodar al entrar en pantalla (para escalonar varias cifras) */
+  retraso?: number;
+  /** se llama cuando el número llegó a su valor la primera vez */
+  alTerminar?: () => void;
+  className?: string;
+}) {
   const ref = useRef<HTMLSpanElement>(null);
   const visto = useInView(ref, { once: true, margin: "-10% 0px" });
   const reducido = useReducedMotion();
   const [mostrado, setMostrado] = useState(alEntrar ? 0 : valor);
+  const primera = useRef(true);
+  const terminar = useRef(alTerminar);
+  terminar.current = alTerminar;
 
   useEffect(() => {
-    if (!alEntrar || visto) setMostrado(valor);
-  }, [valor, visto, alEntrar]);
+    if (alEntrar && !visto) return;
+    const espera = primera.current && alEntrar && !reducido ? retraso : 0;
+    const t = setTimeout(() => {
+      setMostrado(valor);
+      if (primera.current) {
+        primera.current = false;
+        // el resorte de las columnas tarda ~0,7 s en asentarse
+        setTimeout(() => terminar.current?.(), reducido ? 0 : 650);
+      }
+    }, espera);
+    return () => clearTimeout(t);
+  }, [valor, visto, alEntrar, retraso, reducido]);
 
   const texto = Math.round(mostrado).toLocaleString("es-AR");
   const largoFinal = Math.round(valor).toLocaleString("es-AR").length;

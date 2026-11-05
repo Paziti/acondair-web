@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Calculadora } from "@/components/Calculadora";
 import { Vidriera } from "@/components/Vidriera";
-import { NumeroDeslizante } from "@/components/NumeroDeslizante";
+import { PorQueElegirnos } from "@/components/PorQueElegirnos";
 import { Revelar } from "@/components/Revelar";
 import { SliderPrincipal } from "@/components/SliderPrincipal";
 import { CIFRAS, OBRAS, wa } from "@/data/sitio";
@@ -92,25 +92,7 @@ export default function Inicio() {
       </section>
 
       {/* POR QUÉ ELEGIRNOS: banda azul con las cifras publicadas */}
-      <section className="bg-azul text-white">
-        <div className="mx-auto max-w-[1240px] px-4 md:px-6 py-14 md:py-16 grid lg:grid-cols-[1fr_2fr] gap-10 items-center">
-          <div>
-            <h2 className="text-[26px] md:text-[30px] font-semibold">¿Por qué elegirnos?</h2>
-            <p className="mt-2 text-white/85 text-[15.5px]">Un servicio personalizado y profesional nos hace diferentes.</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-4 text-center">
-            {CIFRAS.map((c) => (
-              <div key={c.etiqueta}>
-                <p className="flex items-baseline justify-center text-[48px] sm:text-[40px] md:text-[50px] lg:text-[44px] xl:text-[52px] font-semibold leading-none">
-                  <NumeroDeslizante valor={c.valor} alEntrar />
-                  <span aria-hidden>+</span>
-                </p>
-                <p className="mt-2 text-[14px] sm:text-[15.5px] first-letter:uppercase">{c.etiqueta}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <PorQueElegirnos cifras={CIFRAS} />
 
       {/* TIENDA: el pedido principal de José, que se pueda comprar desde la web */}
       <section className="mx-auto max-w-[1240px] px-4 md:px-6 py-16 md:py-24">
